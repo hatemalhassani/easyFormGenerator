@@ -50,6 +50,12 @@ class $modalProxy {
         ? angular.copy(controlAtThisLineThisCol.templateOptions.datepickerOptions)
         : { format: '' };
       }
+      // particular case : datepicker needs an additionnal property:
+      if (nyaSelectObj.temporyConfig.selectedControl === 'DateTime') {
+        nyaSelectObj.temporyConfig.datetimepickerOptions = controlAtThisLineThisCol.templateOptions.datetimepickerOptions
+        ? angular.copy(controlAtThisLineThisCol.templateOptions.datetimepickerOptions)
+        : { format: '' };
+      }
     }
     return nyaSelectObj;
   }
@@ -77,6 +83,10 @@ class $modalProxy {
     // particular case: datepicker : additionnal prop datepickerOptions
     if (updatedControl.type === 'datepicker') {
       updatedControl.templateOptions.datepickerOptions = angular.copy(extractedProps.datepickerOptions);
+    }
+    // particular case: datepicker : additionnal prop datepickerOptions
+    if (updatedControl.type === 'datetimepicker') {
+      updatedControl.templateOptions.datetimepickerOptions = angular.copy(extractedProps.datetimepickerOptions);
     }
     /**
       * unique key (set only first time) in this model is formly control type + Date.now();
@@ -122,6 +132,10 @@ class $modalProxy {
 
         if (control.id ==='Date' ) {
           control.datepickerOptions = angular.copy(nyaSelectObj.temporyConfig.datepickerOptions);
+        }
+        
+        if (control.id ==='DateTime' ) {
+          control.datetimepickerOptions = angular.copy(nyaSelectObj.temporyConfig.datetimepickerOptions);
         }
       }
     );

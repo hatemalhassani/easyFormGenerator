@@ -88,6 +88,28 @@ class selectOptionManage {
       return fullResponse;
     }
   }
+  
+  addNewOptionMultiSelect(selectObj, newOptionText, newOptionGroup){
+    const fullResponse = {
+      resultFlag: false,
+      details: ''
+    };
+    const checkResult = this.validOption(selectObj, newOptionText);
+    if (checkResult.resultFlag === true) {
+      const newOption = {
+        option: newOptionText,
+        group: newOptionGroup,
+        order: selectObj.rows.length
+      };
+      selectObj.rows.push(newOption);
+      fullResponse.resultFlag = true;
+      fullResponse.details = '';
+      return fullResponse;
+    } else {
+      angular.copy(checkResult, fullResponse);
+      return fullResponse;
+    }
+  }
 
   removeOption(selectObj, AtIndex) {
     const fullResponse = {

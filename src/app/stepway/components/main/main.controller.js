@@ -236,7 +236,7 @@ class edaStepWayEasyFormGenController {
       controllerAs: EDIT_MODAL_CONTROLLERAS_NAME,
       size: this.editControlModalSize,
       resolve: {
-        nyaSelect: () => this.$modalProxy.getNyASelectFromSelectedLineColumn(this.nyaSelect, this.configuration,indexLine, numcolumn)
+        nyaSelect: () => this.$modalProxy.getNyASelectFromSelectedLineColumn(this.nyaSelect, this.configuration, indexLine, numcolumn)
       }
     });
 
@@ -256,7 +256,7 @@ class edaStepWayEasyFormGenController {
     const configlines = JSON.parse(formlyform.formlyField);
     //here to replace with $scope.configuration : initialise configuration with lines
     this.configurationLoaded = {};
-    this.$formlyProxy.bindConfigurationLines(this.configurationLoaded,configlines);
+    this.$formlyProxy.bindConfigurationLines(this.configurationLoaded, configlines);
     this.$formlyProxy.applyConfigurationToformlyModel(this.configurationLoaded, this.previewLoadedForm.fieldsModel, this.dataModel);
     this.wfFormFieldsOnlyNeededProperties = angular.copy(this.wfFormFields);
     this.previewLoadedForm.cancelButtonText = formlyform.cancelButtonText;
@@ -266,23 +266,23 @@ class edaStepWayEasyFormGenController {
   saveThisForm() {
     if (typeof this.configuration.formName === 'undefined') {
       this.toaster.pop({
-          type: 'warning',
-          timeout:2000,
-          title: 'Form name is undefined',
-          body: 'Form has not been saved.',
-          showCloseButton: true
-        });
+        type: 'warning',
+        timeout: 2000,
+        title: 'Form name is undefined',
+        body: 'Form has not been saved.',
+        showCloseButton: true
+      });
       return false;
     }
 
     if (this.configuration.formName === '') {
       this.toaster.pop({
-          type: 'warning',
-          timeout:2000,
-          title: 'Form name is required',
-          body: 'Form has not been saved.',
-          showCloseButton: true
-        });
+        type: 'warning',
+        timeout: 2000,
+        title: 'Form name is required',
+        body: 'Form has not been saved.',
+        showCloseButton: true
+      });
       return false;
     }
 

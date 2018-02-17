@@ -34,7 +34,7 @@ export const editDateControlComponent = {
                   </span>
                   <input
                     type="text"
-                    class="form-control"
+                    class="form-control formly_3_datetimepicker_datetimepicker-1994127_1"
                     uib-datepicker-popup="{{$ctrl.nyaSelect.temporyConfig.datepickerOptions.format}}"
                     ng-model="$ctrl.demodt.dt"
                     is-open="$ctrl.demodt.opened"
@@ -152,17 +152,17 @@ export const editDateControlComponent = {
     open: '&'
   },
   controller:
-  class editDateControlController {
-    static $inject = [];
+    class editDateControlController {
+      static $inject = [];
 
-    constructor() {
+      constructor() {
 
+      }
     }
-  }
 };
 
 const editDateControlModuleName = 'stepway.editDateControl.module';
 
 export default angular
-                .module(editDateControlModuleName, [])
-                .component(EDIT_DATE_COMPONENT, editDateControlComponent);
+  .module(editDateControlModuleName, [])
+  .component(EDIT_DATE_COMPONENT, editDateControlComponent);

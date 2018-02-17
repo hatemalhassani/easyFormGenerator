@@ -29,26 +29,20 @@ export const editGroupedSelectControlComponent = {
               </span>
             </label>
             <div class="">
-              <ol
-                class="nya-bs-select col-sm-12 col-xs-12 col-md-12 col-lg12"
-                ng-model="modelGroupedSelect"
-                data-live-search="true"
-                disabled="$ctrl.groupedSelectRowCollection.rows.length === 0">
-                <li
-                  nya-bs-option="groupedSelectRow in $ctrl.groupedSelectRowCollection.rows group by groupedSelectRow.group"
-                  value="$index">
-                  <span class="dropdown-header">
-                    {{groupedSelectRow.group}}
-                  </span>
-                  <a>
-                    <span>
-                      {{groupedSelectRow.option}}
-                    </span>
-                    <span class="glyphicon glyphicon-ok check-mark">
-                    </span>
-                  </a>
-                </li>
-              </ol>
+              <select multiple                 
+                ng-model="modelMultiSelect"
+                class="js-example-basic-multiple col-sm-12 col-xs-12 col-md-12 col-lg12"
+                ng-disabled="$ctrl.multiSelectRowCollection.rows.length == 0">
+                <div>
+                <optgroup label="{{key}}" ng-repeat="(key, value) in $ctrl.multiSelectRowCollection.rows | groupBy:'group' ">
+                  <option  ng-repeat="multiSelectRow in value" value="multiSelectRow.option" >
+                    {{multiSelectRow.option}}
+                  </option>
+                </optgroup>
+                </div>
+
+              </select>
+                
               <p class="help-block">
                 {{$ctrl.nyaSelect.temporyConfig.formlyDescription}}
               </p>
@@ -74,7 +68,7 @@ export const editGroupedSelectControlComponent = {
       <div class="row">
         <div class="col-lg-3 col-md-3">
           <label
-            for="groupedSelectRowCollection"
+            for="multiSelectRowCollection"
             class=" control-label greyText editPropertiesLabel">
             {{'ADD_NEW_OPTIONS' | translate}} :
           </label>
@@ -87,14 +81,14 @@ export const editGroupedSelectControlComponent = {
               <input
                 type="text"
                 class="form-control"
-                id="inputAddNewGroupedOption"
+                id="inputAddNewMultiOption"
                 placeholder="{{'ADD_A_NEW_OPTION' | translate}}"
-                ng-model="$ctrl.newOptionGroupedSelect.saisie">
+                ng-model="$ctrl.newOptionMultiSelect.saisie">
             </div>
             <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
               <button
                 class="btn btn-primary"
-                ng-click="$ctrl.addNewOptionGroupedSelect()">
+                ng-click="$ctrl.addNewOptionMultiSelect()">
                 {{'ADD' | translate}}
               </button>
             </div>
@@ -104,7 +98,7 @@ export const editGroupedSelectControlComponent = {
       <div class="row">
         <div class="col-lg-3 col-md-3">
           <label
-            for="groupedSelectRowCollection"
+            for="multiSelectRowCollection"
             class=" control-label greyText editPropertiesLabel">
             {{'ADD_NEW_GROUPS' | translate}} :
           </label>
@@ -115,16 +109,16 @@ export const editGroupedSelectControlComponent = {
           <div class="form-group">
             <div class="col-sm-9 col-xs-9 col-md-9 col-lg-9">
               <input
-                id="inputAddNewGroupGroupedOption"
+                id="inputAddNewGroupMultiOption"
                 type="text"
                 class="form-control"
-                ng-model="$ctrl.newGroupGroupedSelect.saisie" id="inputTextLabelUpdateGroupedSelect"
+                ng-model="$ctrl.newGroupMultiSelect.saisie" id="inputTextLabelUpdateMultiSelect"
                 placeholder="{{'ADD_A_NEW_GROUP' | translate}}">
             </div>
             <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
               <button
                 class="btn btn-primary"
-                ng-click="$ctrl.addNewGroupToGroupedSelect()">
+                ng-click="$ctrl.addNewGroupToMultiSelect()">
                 {{'ADD' | translate}}
               </button>
             </div>
@@ -142,7 +136,7 @@ export const editGroupedSelectControlComponent = {
         <div class="form-group">
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="container">
-              <div ng-if="$ctrl.groupedSelectRowCollection.rows.length === 0">
+              <div ng-if="$ctrl.multiSelectRowCollection.rows.length === 0">
                 <h5 class="text-center greyText">
                   <em>
                     - {{'NO_OPTION_ADD_NEW' | translate}} -
@@ -150,7 +144,7 @@ export const editGroupedSelectControlComponent = {
                 </h5>
               </div>
               <table
-                ng-if="$ctrl.groupedSelectRowCollection.rows.length > 0"
+                ng-if="$ctrl.multiSelectRowCollection.rows.length > 0"
                 class="table table-striped">
                 <thead>
                   <tr>
@@ -173,7 +167,7 @@ export const editGroupedSelectControlComponent = {
                     </th>
                     <th st-ratio="30">
                       <input
-                        ng-model="$ctrl.groupedSelectFilter"
+                        ng-model="$ctrl.multiSelectFilter"
                         placeholder="{{'SEARCH_4_OPTION' | translate}}"
                         class="input-sm form-control"
                         type="search"
@@ -184,47 +178,47 @@ export const editGroupedSelectControlComponent = {
                   </tr>
                   </thead>
                   <tbody>
-                  <tr ng-repeat="groupedSelectRow in $ctrl.groupedSelectRowCollection.rows | filter:$ctrl.groupedSelectFilter as groupedSelectRow">
+                  <tr ng-repeat="multiSelectRow in $ctrl.multiSelectRowCollection.rows | filter:$ctrl.multiSelectFilter as multiSelectRow">
                     <td st-ratio="20">
                       {{$index}}
                     </td>
                     <td st-ratio="25">
                       <div ng-if="$ctrl.groupSelectGroupClick.showList === true">
-                        <div ng-if="$ctrl.groupedSelectGroups.list.length === 0">
+                        <div ng-if="$ctrl.multiSelectGroups.list.length === 0">
                           <p class="text-left noGroupText">- {{'NO_GROUP_ADD_NEW' | translate}} -</p>
                         </div>
-                        <div ng-if="$ctrl.groupedSelectGroups.list.length > 0">
+                        <div ng-if="$ctrl.multiSelectGroups.list.length > 0">
                           <ol
-                            class="nya-bs-select col-sm-12 col-xs-12 col-md-12 col-lg12 editGroupedSelectnyaSelect"
-                            ng-model="groupedSelectRow.group"
-                            id="modelGroupedOptionGroupedChoose"
-                            disabled="$ctrl.groupedSelectGroups.list.length === 0">
+                            class="nya-bs-select col-sm-12 col-xs-12 col-md-12 col-lg12 editMultiSelectnyaSelect"
+                            ng-model="multiSelectRow.group"
+                            id="modelMultiOptionMultiChoose"
+                            disabled="$ctrl.multiSelectGroups.list.length === 0">
                             <li
                               class="nya-bs-option"
-                              nya-bs-option="GroupedSelectGroup in $ctrl.groupedSelectGroups.list"
-                              value="GroupedSelectGroup">
-                              <a>{{GroupedSelectGroup}}</a>
+                              nya-bs-option="MultiSelectGroup in $ctrl.multiSelectGroups.list"
+                              value="MultiSelectGroup">
+                              <a>{{MultiSelectGroup}}</a>
                             </li>
                           </ol>
                         </div>
                       </div>
                       <div ng-if="$ctrl.groupSelectGroupClick.showList === false">
-                        {{groupedSelectRow.group}}
+                        {{multiSelectRow.group}}
                       </div>
                     </td>
                     <td st-ratio="30">
-                      {{groupedSelectRow.option}}
+                      {{multiSelectRow.option}}
                     </td>
                     <td st-ratio="25">
                       <div class="pull-right">
                         <button
                           class="btn btn-primary"
-                          ng-click="$ctrl.upThisGroupedSelectRow({index: $index})">
+                          ng-click="$ctrl.upThisMultiSelectRow({index: $index})">
                           <i class="fa fa-arrow-up"></i>
                         </button>
                         <button
                           class="btn btn-primary"
-                          ng-click="$ctrl.downThisGroupedSelectRow({index: $index})">
+                          ng-click="$ctrl.downThisMultiSelectRow({index: $index})">
                           <i class="fa fa-arrow-down"></i>
                         </button>
                         <button
@@ -234,7 +228,7 @@ export const editGroupedSelectControlComponent = {
                         </button>
                         <button
                           class="btn btn-danger"
-                          ng-click="$ctrl.removeGroupedSelectRow({index: $index})">
+                          ng-click="$ctrl.removeMultiSelectRow({index: $index})">
                           <i class="fa fa-trash-o"></i>
                         </button>
                       </div>
@@ -282,25 +276,24 @@ export const editGroupedSelectControlComponent = {
             placeholder="{{'ADDEDIT_DESCRIPTION' | translate}}">
       </div>
     </div>
-  </div>
+  </div>  
   `,
   bindings: {
-    nyaSelect:                  '=',
-    groupedSelectRowCollection: '=',
-    newOptionGroupedSelect:     '=',
-    newGroupGroupedSelect:      '=',
-    groupSelectGroupClick:      '=',
-    groupedSelectGroups:        '=',
+    nyaSelect: '=',
+    multiSelectRowCollection: '=',
+    newOptionMultiSelect: '=',
+    newGroupMultiSelect: '=',
+    groupSelectGroupClick: '=',
+    multiSelectGroups: '=',
 
-    addNewOptionGroupedSelect:  '&',
-    addNewGroupToGroupedSelect: '&',
-    upThisGroupedSelectRow:     '&',
-    downThisGroupedSelectRow:   '&',
-    showGroupListToChoose:      '&',
-    removeGroupedSelectRow:     '&'
+    addNewOptionMultiSelect: '&',
+    addNewGroupToMultiSelect: '&',
+    upThisMultiSelectRow: '&',
+    downThisMultiSelectRow: '&',
+    showGroupListToChoose: '&',
+    removeMultiSelectRow: '&'
   },
-  controller    :
-  class editGroupedSelectControlController {
+  controller: class editGroupedSelectControlController {
     static $inject = [];
 
     constructor() {
@@ -312,5 +305,7 @@ export const editGroupedSelectControlComponent = {
 const editGroupedSelectModuleName = 'stepway.editGroupedSelect.module';
 
 export default angular
-                .module(editGroupedSelectModuleName, [])
-                .component(EDIT_GROUPED_SELECT_COMPONENT, editGroupedSelectControlComponent);
+  .module(editGroupedSelectModuleName, [])
+  .component(EDIT_GROUPED_SELECT_COMPONENT, editGroupedSelectControlComponent);
+
+

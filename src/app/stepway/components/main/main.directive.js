@@ -1,7 +1,7 @@
 import {
   STEP_WAY_MAIN_CONTROLLER_NAME,
   STEP_WAY_MAIN_CONTROLLERAS_NAME
-}                                  from  './main.controller';
+} from './main.controller';
 
 const STEP_WAY_DIRECTIVE_NAME = 'edaStepWayEasyFormGen';
 
@@ -78,7 +78,7 @@ function edaStepWayEasyFormGenDirective(
                         </div>
                       </div>
                     </uib-tab>
-                    <uib-tab
+                    <uib-tab 
                       active="vm.tab.previewTab.active"
                       ng-if="vm.tab.previewTab.tabVisible && !vm.configuration.isWizard"
                       heading="{{'PREVIEW_TAB' | translate}}">
@@ -135,6 +135,9 @@ function edaStepWayEasyFormGenDirective(
           </div>
         </div>
       </section>
+
+
+ 
     `,
     scope: {
       edaEasyFormGeneratorModel: '=',
@@ -147,19 +150,19 @@ function edaStepWayEasyFormGenDirective(
   };
   return directive;
 
-  function linkFct(scope){
+  function linkFct(scope) {
     //watch "scope.easyFormGeneratorModel"
     scope.$watch(() => scope.edaEasyFormGeneratorModel,
       () => loadExistingConfigurationModel(),
       true
     );
 
-    if (scope.wizardStepGeneratorModel){
+    if (scope.wizardStepGeneratorModel) {
       loadExistingConfigurationModel();
       scope.wizardStepGeneratorModel.configuration = scope.vm.configuration;
-      scope.wizardStepGeneratorModel.edaFieldsModel            = scope.vm.configuration.lines;
-      scope.wizardStepGeneratorModel.formlyFieldsModel         = scope.vm.wfFormFields;
-      scope.wizardStepGeneratorModel.dataModel                 = scope.vm.dataModel;
+      scope.wizardStepGeneratorModel.edaFieldsModel = scope.vm.configuration.lines;
+      scope.wizardStepGeneratorModel.formlyFieldsModel = scope.vm.wfFormFields;
+      scope.wizardStepGeneratorModel.dataModel = scope.vm.dataModel;
       scope.vm.configuration.isWizard = true;
       if (scope.wizardStepGeneratorModel.loaded) {
         angular.copy(scope.wizardStepGeneratorModel.loaded.edaFieldsModel, scope.wizardStepGeneratorModel.edaFieldsModel);
@@ -174,33 +177,35 @@ function edaStepWayEasyFormGenDirective(
       (newValue) => {
         if (newValue === true) {
           const _easyFormGeneratorModel = {
-            formName                  : scope.vm.configuration.formName,
-            btnSubmitText             : scope.vm.configuration.submitButtonText,
-            btnCancelText             : scope.vm.configuration.cancelButtonText,
-            edaFieldsModel            : scope.vm.configuration.lines,
-            edaFieldsModelStringified : angular.toJson(scope.vm.configuration.lines),
-            formlyFieldsModel         : scope.vm.wfFormFieldsOnlyNeededProperties,
-            dataModel                 : scope.vm.dataModel
+            formName: scope.vm.configuration.formName,
+            btnSubmitText: scope.vm.configuration.submitButtonText,
+            btnCancelText: scope.vm.configuration.cancelButtonText,
+            edaFieldsModel: scope.vm.configuration.lines,
+            edaFieldsModelStringified: angular.toJson(scope.vm.configuration.lines),
+            formlyFieldsModel: scope.vm.wfFormFieldsOnlyNeededProperties,
+            dataModel: scope.vm.dataModel
           };
-          scope.edaSaveFormEvent({ edaEasyFormGeneratorModel : _easyFormGeneratorModel });
+          scope.edaSaveFormEvent({
+            edaEasyFormGeneratorModel: _easyFormGeneratorModel
+          });
           //back to false, waiting next save event
           scope.vm.returnSaveEvent = false;
         }
       }
     );
 
-    function loadExistingConfigurationModel(){
-      if(angular.isDefined(scope.edaEasyFormGeneratorModel)){
+    function loadExistingConfigurationModel() {
+      if (angular.isDefined(scope.edaEasyFormGeneratorModel)) {
         const configlines = [].concat(returnAttributeConfigurationLinesIfNotEmpty());
         scope.configurationLoaded = {};
-        $formlyProxy.bindConfigurationLines(scope.configurationLoaded,configlines);
+        $formlyProxy.bindConfigurationLines(scope.configurationLoaded, configlines);
         /**
-          * rebind special control properties :
-          *
-          * formly expression properties
-          * Validators
-          * Validation
-          */
+         * rebind special control properties :
+         *
+         * formly expression properties
+         * Validators
+         * Validation
+         */
         $modalProxy.refreshControlFormlyExpressionProperties(scope.configurationLoaded);
         $modalProxy.refreshControlFormlyValidators(scope.configurationLoaded);
         $modalProxy.refreshControlFormlyValidation(scope.configurationLoaded);
@@ -209,58 +214,52 @@ function edaStepWayEasyFormGenDirective(
         //apply formly model
         $formlyProxy.applyConfigurationToformlyModel(scope.configurationLoaded, scope.vm.wfFormFields, scope.vm.model);
         scope.vm.wfFormFieldsOnlyNeededProperties = angular.copy(scope.vm.wfFormFields);
-        scope.vm.dataModel                        = returnAttributeDataModelIfNotEmpty();
-        scope.vm.configuration.formName           = angular.isString(scope.edaEasyFormGeneratorModel.formName)       ? scope.edaEasyFormGeneratorModel.formName       : '';
-        scope.vm.configuration.submitButtonText   = angular.isString(scope.edaEasyFormGeneratorModel.btnSubmitText)  ? scope.edaEasyFormGeneratorModel.btnSubmitText  : 'Submit';
-        scope.vm.configuration.cancelButtonText   = angular.isString(scope.edaEasyFormGeneratorModel.btnCancelText)  ? scope.edaEasyFormGeneratorModel.btnCancelText  : 'Cancel';
+        scope.vm.dataModel = returnAttributeDataModelIfNotEmpty();
+        scope.vm.configuration.formName = angular.isString(scope.edaEasyFormGeneratorModel.formName) ? scope.edaEasyFormGeneratorModel.formName : '';
+        scope.vm.configuration.submitButtonText = angular.isString(scope.edaEasyFormGeneratorModel.btnSubmitText) ? scope.edaEasyFormGeneratorModel.btnSubmitText : 'Submit';
+        scope.vm.configuration.cancelButtonText = angular.isString(scope.edaEasyFormGeneratorModel.btnCancelText) ? scope.edaEasyFormGeneratorModel.btnCancelText : 'Cancel';
       }
     }
 
-    function returnAttributeConfigurationLinesIfNotEmpty(){
+    function returnAttributeConfigurationLinesIfNotEmpty() {
       const edaEasyFormGeneratorModelToReturn = (
-          angular.isArray(scope.edaEasyFormGeneratorModel.edaFieldsModel) ?  (
-              scope.edaEasyFormGeneratorModel.edaFieldsModel.length > 0 ?
-                scope.edaEasyFormGeneratorModel.edaFieldsModel
-              : emptyEdaFieldsModel()
-              )
-          : emptyEdaFieldsModel()
+        angular.isArray(scope.edaEasyFormGeneratorModel.edaFieldsModel) ? (
+          scope.edaEasyFormGeneratorModel.edaFieldsModel.length > 0 ?
+            scope.edaEasyFormGeneratorModel.edaFieldsModel :
+            emptyEdaFieldsModel()
+        ) :
+          emptyEdaFieldsModel()
       );
-        return edaEasyFormGeneratorModelToReturn;
+      return edaEasyFormGeneratorModelToReturn;
     }
 
-    function returnAttributeDataModelIfNotEmpty(){
+    function returnAttributeDataModelIfNotEmpty() {
       const dataModelToReturn = (
-          angular.isArray(scope.edaEasyFormGeneratorModel.dataModel)   ?  (
-              scope.edaEasyFormGeneratorModel.dataModel.length > 0 ?
-              scope.edaEasyFormGeneratorModel.dataModel
-              : {}
-              )
-          : {}
+        angular.isArray(scope.edaEasyFormGeneratorModel.dataModel) ? (
+          scope.edaEasyFormGeneratorModel.dataModel.length > 0 ?
+            scope.edaEasyFormGeneratorModel.dataModel : {}
+        ) : {}
       );
-        return dataModelToReturn;
+      return dataModelToReturn;
     }
 
     /**
-      * empty fields model : to display at least an empty line
-      * otherwise would look like ugly empty line like it were a bug
-      */
-    function emptyEdaFieldsModel(){
-      const emptyModel = [
-        {
-          line: 1,
-          activeColumn: 1,
-          columns: [
-            {
-              numColumn: 1,
-              exist: true,
-              control: {
-                type: 'none',
-                key: 'none'
-              }
-            }
-          ]
-        }
-      ];
+     * empty fields model : to display at least an empty line
+     * otherwise would look like ugly empty line like it were a bug
+     */
+    function emptyEdaFieldsModel() {
+      const emptyModel = [{
+        line: 1,
+        activeColumn: 1,
+        columns: [{
+          numColumn: 1,
+          exist: true,
+          control: {
+            type: 'none',
+            key: 'none'
+          }
+        }]
+      }];
       return emptyModel;
     }
   }
@@ -274,4 +273,59 @@ edaStepWayEasyFormGenDirective.$inject = [
 ];
 
 export default edaStepWayEasyFormGenDirective;
-export {STEP_WAY_DIRECTIVE_NAME};
+export {
+  STEP_WAY_DIRECTIVE_NAME
+};
+
+
+
+
+/* <form ng-submit="vm.onSubmit()">
+<formly-form
+  id="previewFormlyForm"
+  model="vm.dataModel"
+  fields="vm.wfFormFields">
+  <span class="pull-right">
+    <button
+      class="btn btn-primary"
+      type="submit">
+      {{vm.configuration.submitButtonText}}
+    </button>
+    <button
+      class="btn btn-primary"
+      type="cancel">
+      {{vm.configuration.cancelButtonText}}
+    </button>
+  </span>
+</formly-form>
+</form> */
+
+
+
+
+
+/* <form ng-submit="vm.onSubmit()" novalidate>
+<formly-form model="vm.model" fields="vm.fields" form="vm.form" options="vm.options">
+  <button type="submit" class="btn btn-primary submit-button" ng-disabled="vm.form.$invalid">Submit</button>
+</formly-form>
+</form> */
+
+/* <form ng-submit="vm.onSubmit()" novalidate>
+                          <formly-form
+                            id="previewFormlyForm"
+                            model="vm.dataModel"
+                            fields="vm.wfFormFields">
+                            <span class="pull-right">
+                              <button
+                                class="btn btn-primary"
+                                type="submit">
+                                {{vm.configuration.submitButtonText}}
+                              </button>
+                              <button
+                                class="btn btn-primary"
+                                type="cancel">
+                                {{vm.configuration.cancelButtonText}}
+                              </button>
+                            </span>
+                          </formly-form>
+                          </form> */

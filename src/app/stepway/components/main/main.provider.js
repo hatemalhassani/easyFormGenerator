@@ -42,26 +42,30 @@ function easyFormSteWayConfig($translateProvider) {
       return _currentLanguage;
   }
 
-  //list of controls
-  function controlsList() {
-    const controls = [
-      {name: 'empty',          enabled: true},
-      {name: 'Header',         enabled: true},
-      {name: 'Subtitle',       enabled: true},
-      {name: 'TextInput',      enabled: true},
-      {name: 'Password',       enabled: true},
-      {name: 'Email',          enabled: true},
-      {name: 'IpAdress',       enabled: true},
-      {name: 'Date',           enabled: true},
-      {name: 'Texarea',        enabled: true},
-      {name: 'RichTextEditor', enabled: true},
-      {name: 'Radio',          enabled: true},
-      {name: 'Checkbox',       enabled: true},
-      {name: 'BasicSelect',    enabled: true},
-      {name: 'GroupedSelect',  enabled: true}
-    ];
-    return controls;
-  }
+    //list of controls
+    function controlsList() {
+        const controls = [
+            { name: 'empty', enabled: true },
+            { name: 'Header', enabled: true },
+            { name: 'Subtitle', enabled: true },
+            { name: 'TextInput', enabled: true },
+            { name: 'Password', enabled: true },
+            { name: 'Email', enabled: true },
+            { name: 'IpAdress', enabled: true },
+            { name: 'Date', enabled: true },
+            { name: 'DateTime', enabled: true },
+            { name: 'Texarea', enabled: true },
+            { name: 'RepeatSection', enabled: true },
+            { name: 'RichTextEditor', enabled: true },
+            { name: 'Radio', enabled: true },
+            { name: 'Checkbox', enabled: true },
+            { name: 'BasicSelect', enabled: true },
+            { name: 'NumberInput', enabled: true },
+            { name: 'MultiSelect', enabled: true },
+            { name: 'GroupedSelect', enabled: true }
+        ];
+        return controls;
+    }
 
   function showPreviewPanel(wantToShow) {
     if (angular.isDefined(wantToShow)) {
@@ -137,12 +141,12 @@ function easyFormSteWayConfig($translateProvider) {
     }
   }
 
-  function setModalAnimation(flagConfig) {
-    const valueToApply = (flagConfig === true)
-                        ? flagConfig
-                        : (flagConfig === false
-                          ? flagConfig
-                          : _configuration.modalAnimated);
+    function setModalAnimation(flagConfig) {
+        const valueToApply = (flagConfig === true) ?
+            flagConfig :
+            (flagConfig === false ?
+                flagConfig :
+                _configuration.modalAnimated);
 
     _configuration.modalAnimated = valueToApply;
   }

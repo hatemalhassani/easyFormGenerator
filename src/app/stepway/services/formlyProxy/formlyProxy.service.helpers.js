@@ -82,6 +82,14 @@ const extractTemplateOptionDatepickerOptions= (obj) => {
   return defaultValue;
 };
 
+const extractTemplateOptionDateTimepickerOptions= (obj) => {
+  const defaultValue = { format: '' };
+  if (isTemplateOptionDefined(obj) && obj.templateOptions.datetimepickerOptions) {
+    return {...obj.templateOptions.datetimepickerOptions};
+  }
+  return defaultValue;
+};
+
 const extractTemplateOptionRequired = (obj) => {
   const defaultValue = false;
   if (isTemplateOptionDefined(obj) && obj.templateOptions.required) {
@@ -159,6 +167,11 @@ const addDatepickerOptionsProperty = (fieldToPush, configurationModel, lineIndex
   fieldToPush.templateOptions.datepickerOptions = extractTemplateOptionDatepickerOptions(control);
 };
 
+const addDateTimepickerOptionsProperty = (fieldToPush, configurationModel, lineIndex) => {
+  const control = {...configurationModel.lines[lineIndex].columns[0].control};
+  fieldToPush.templateOptions.datetimepickerOptions = extractTemplateOptionDateTimepickerOptions(control);
+};
+
 // const addOneColumnHeader = (formlyModel, configurationModel, lineIndex) => {
 //   const control = { ...configurationModel.lines[lineIndex].columns[0].control };
 //   const defaultTemplate = '<div></div>';
@@ -209,6 +222,9 @@ const addOneColumnControl = (formlyModel, configurationModel,lineIndex) => {
   if (control.type === 'datepicker') {
     addDatepickerOptionsProperty(fieldToPush, configurationModel, lineIndex);
   }
+  if (control.type === 'datetimepicker') {
+    addDateTimepickerOptionsProperty(fieldToPush, configurationModel, lineIndex);
+  }
   formlyModel.push(fieldToPush);
 };
 
@@ -251,6 +267,9 @@ const addTwoColumnControl = (formlyModel, configurationModel,lineIndex) => {
   if (control0.type === 'datepicker') {
     addDatepickerOptionsProperty(controlCol0, configurationModel, lineIndex);
   }
+  if (control0.type === 'datetimepicker') {
+    addDateTimepickerOptionsProperty(controlCol0, configurationModel, lineIndex);
+  }
 
   const control1 = { ...configurationModel.lines[lineIndex].columns[1].control };
   const headerTemplateCol1 =  {
@@ -288,6 +307,9 @@ const addTwoColumnControl = (formlyModel, configurationModel,lineIndex) => {
   //////////////////////////////////////////////
   if (control1.type === 'datepicker') {
     addDatepickerOptionsProperty(controlCol1, configurationModel, lineIndex);
+  }
+  if (control1.type === 'datetimepicker') {
+    addDateTimepickerOptionsProperty(controlCol1, configurationModel, lineIndex);
   }
 
   const FieldGroup = [];
@@ -350,6 +372,9 @@ const addThreeColumnControl = (formlyModel, configurationModel,lineIndex) => {
   if (control0.type === 'datepicker') {
   addDatepickerOptionsProperty(controlCol0, configurationModel,lineIndex);
   }
+  if (control0.type === 'datetimepicker') {
+    addDateTimepickerOptionsProperty(controlCol0, configurationModel,lineIndex);
+  }
 
   const control1 = { ...configurationModel.lines[lineIndex].columns[1].control };
   const headerTemplateCol1 =  {
@@ -388,6 +413,9 @@ const addThreeColumnControl = (formlyModel, configurationModel,lineIndex) => {
   if (control1.type === 'datepicker') {
   addDatepickerOptionsProperty(controlCol1, configurationModel,lineIndex);
   }
+  if (control1.type === 'datetimepicker') {
+    addDateTimepickerOptionsProperty(controlCol1, configurationModel,lineIndex);
+  }
 
   const control2 = { ...configurationModel.lines[lineIndex].columns[2].control };
   const headerTemplateCol2 =  {
@@ -425,6 +453,9 @@ const addThreeColumnControl = (formlyModel, configurationModel,lineIndex) => {
   //////////////////////////////////////////////
   if (control2.type === 'datepicker') {
   addDatepickerOptionsProperty(controlCol2, configurationModel,lineIndex);
+  }
+  if (control2.type === 'datetimepicker') {
+    addDateTimepickerOptionsProperty(controlCol2, configurationModel,lineIndex);
   }
 
   const FieldGroup = [];
@@ -476,6 +507,7 @@ export {
   isTemplateOptionDefined,
   extractTemplateOptionLabel,
   extractTemplateOptionDatepickerOptions,
+  extractTemplateOptionDateTimepickerOptions,
   extractDefaultValue,
   extractFormlyExpressionProperties,
   extractFormlyValidators,
@@ -487,6 +519,7 @@ export {
   extractTemplateOptionDescription,
 
   addDatepickerOptionsProperty,
+  addDateTimepickerOptionsProperty,
   addOneColumnControl,
   addTwoColumnControl,
   addThreeColumnControl

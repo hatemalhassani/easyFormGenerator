@@ -51,7 +51,7 @@ body {
 
 textarea, textarea.form-control, input.form-control,
 input[type=text], input[type=password], input[type=email],
-input[type=number], [type=text].form-control, [type=password].form-control,
+// input[type=number], [type=text].form-control, [type=password].form-control,
 [type=email].form-control, [type=tel].form-control, [contenteditable].form-control {
 font-size:$input-font-size;
 }
@@ -613,6 +613,9 @@ easy customize animation from here : http://www.nganimate.org/angularjs/ng-repea
   margin-bottom : 20px;
 }
 .editGroupedSelectnyaSelect {
+    margin-bottom:0px;
+}
+.editMultiSelectnyaSelect {
     margin-bottom:0px;
 }
 

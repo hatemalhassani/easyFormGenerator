@@ -63,6 +63,10 @@ const returnControlFromAddCtrlModalModel = (CtrlModalModel) =>{
       if (controlRef.formlyType === 'datepicker') {
         returnCtrl.datepickerOptions = controlRef.datepickerOptions;
       }
+      // particular case: date picker needs an additional property
+      if (controlRef.formlyType === 'datetimepicker') {
+        returnCtrl.datetimepickerOptions = controlRef.datetimepickerOptions;
+      }
       return returnCtrl;
     }
   }

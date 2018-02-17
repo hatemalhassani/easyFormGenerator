@@ -59,7 +59,7 @@ export const basicSelectTemplate = {
   `
 };
 
-export const groupedSelectTemplate = {
+export const oldgroupedSelectTemplate = {
   template: `
     <ol
       class="nya-bs-select col-sm-12 col-xs-12 col-md-12 col-lg12"
@@ -80,6 +80,69 @@ export const groupedSelectTemplate = {
     </ol>
     `
 };
+
+export const groupedSelectTemplate = {
+  template: `  
+  <select multiple id="{{generatedId}}"  class="js-example-basic-multiple col-sm-12 col-xs-12 col-md-12 col-lg12"
+  ng-model="model[options.key]"
+  ng-disabled="DisplayOptions.length == 0">
+  <div>
+  <optgroup ng-repeat="group in DisplayOptions" label="{{group.group}}">
+  <option ng-repeat="option in group.options" value="{{option}}" >
+  {{option}}
+  </option>
+  </optgroup>
+  </div>
+  </select>   
+   
+  `
+};
+
+export const repeatSectionTemplate = {
+  template: `     
+      	<div>
+          <div class="repeatsection" ng-repeat="element in model[options.key]" ng-init="elemfields = copyFields(fields)">
+            <formly-form fields="elemfields"
+                         model="element"
+                         form="form">
+            </formly-form>
+            <div style="margin-bottom:20px;">
+              <button type="button" class="btn btn-sm btn-danger" ng-click="model[options.key].splice($index, 1)">
+                Remove
+              </button>
+            </div>
+            <hr>
+        </div>
+        <p class="AddNewButton">
+  	      <button type="button" class="btn btn-primary" ng-click="addNew()" >{{btnText}}</button>
+        </p>
+      </div>
+  `
+};
+
+
+export const editRepeatSectionTemplate = {
+  template: `   
+      	<div ng-if="options && options.key==='investments'">
+          <div class="repeatsection" ng-repeat="element in model[options.key]" ng-init="elemfields = copyFields(to.fields)">
+            <formly-form fields="elemfields"
+                         model="element"
+                         form="form">
+            </formly-form>
+            <div style="margin-bottom:20px;">
+              <button type="button" class="btn btn-sm btn-danger" ng-click="model[options.key].splice($index, 1)">
+                Remove
+              </button>
+            </div>
+            <hr>
+        </div>
+        <p class="AddNewButton">
+  	      <button type="button" class="btn btn-primary" ng-click="addNew()" >{{to.btnText}}</button>
+        </p>
+      </div>
+  `
+};
+
 
 export const datepickerTemplate = {
   template: `
@@ -104,6 +167,27 @@ export const datepickerTemplate = {
         datepicker-options="to.datepickerOptions"
       />
     </p>
+  `
+};
+
+export const datetimepickerTemplate = {
+  template: `
+  <p class="input-group">
+  <span class="input-group-btn">
+    <button
+      type="button"
+      class="btn btn-default">
+      <i class="glyphicon glyphicon-calendar"></i>
+    </button>
+  </span>
+  <input
+      id="{{::id}}"
+      name="{{::id}}"
+        type="text"
+        ng-model="model[options.key]"
+        class="form-control"
+  />
+</p>
   `
 };
 
